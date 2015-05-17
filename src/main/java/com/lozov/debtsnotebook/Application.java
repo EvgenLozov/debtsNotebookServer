@@ -5,6 +5,7 @@ import com.lozov.debtsnotebook.entity.User;
 import com.lozov.debtsnotebook.repository.DebtRepository;
 import com.lozov.debtsnotebook.repository.UserRepository;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.springframework.boot.SpringApplication;
@@ -15,24 +16,20 @@ import java.net.UnknownHostException;
 
 @SpringBootApplication
 public class Application {
+    private static final String MONGODB_NAME = "heroku_app36911993";
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
     @Bean
     public UserRepository userRepository() throws UnknownHostException {
-        Morphia morphia = morphia();
-        MongoClient mongoClient = mongoClient();
-        Datastore datastore = morphia.createDatastore(mongoClient, "debts");
-        return new UserRepository(User.class, datastore);
+        return new UserRepository(User.class, datastore());
     }
 
     @Bean
     public DebtRepository debtRepository() throws UnknownHostException {
-        Morphia morphia = morphia();
-        MongoClient mongoClient = mongoClient();
-        Datastore datastore = morphia.createDatastore(mongoClient, "debts");
-        return new DebtRepository(Debt.class, datastore);
+        return new DebtRepository(Debt.class, datastore());
     }
 
     @Bean
@@ -43,8 +40,23 @@ public class Application {
     }
 
     @Bean
-    public MongoClient mongoClient() throws UnknownHostException {
-        return new MongoClient("127.0.0.1", 27017);
+    public Datastore datastore() throws UnknownHostException {
+        MongoClient mongoClient;
+        try {
+            String url = System.getenv("MONGOLAB_URI");
+
+            if (url != null)
+                mongoClient = new MongoClient(new MongoClientURI(url));
+            else
+                mongoClient = new MongoClient();
+
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
+        Datastore datastore = morphia().createDatastore(mongoClient, MONGODB_NAME);
+
+        return datastore;
     }
 
 }
