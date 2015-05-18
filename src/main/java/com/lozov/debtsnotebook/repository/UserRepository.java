@@ -6,6 +6,9 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 import org.mongodb.morphia.query.QueryImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by lozov on 12.05.15.
  */
@@ -13,6 +16,7 @@ import org.mongodb.morphia.query.QueryImpl;
 public class UserRepository extends BasicDAO<User, String> {
     private static final String FIELD_USERNAME = "username";
     private static final String FIELD_PASSWORD = "password";
+    private static final String FIELD_ID = "_id";
 
     public UserRepository(Class<User> entityClass, Datastore ds) {
         super(entityClass, ds);
@@ -23,7 +27,23 @@ public class UserRepository extends BasicDAO<User, String> {
     }
 
     public User get(String username, String password) {
-        return findOne(new QueryImpl<>(User.class, getCollection(), getDatastore())
-                        .filter(FIELD_USERNAME, username).filter(FIELD_PASSWORD, password));
+        return findOne(new QueryImpl<User>(User.class, getCollection(), getDatastore())
+                .filter(FIELD_USERNAME, username).filter(FIELD_PASSWORD, password));
+    }
+
+    public List<User> get(List<String> userIds) {
+        if(userIds == null || userIds.isEmpty())
+            return new ArrayList<User>();
+
+        return find(new QueryImpl<User>(User.class, getCollection(), getDatastore())
+                    .filter(FIELD_ID + " in", convert(userIds))).asList();
+    }
+
+    private List<ObjectId> convert(List<String> ids){
+        List<ObjectId> results = new ArrayList<ObjectId>();
+        for (String id : ids) {
+            results.add(new ObjectId(id));
+        }
+        return results;
     }
 }
