@@ -20,8 +20,8 @@ public class UserService {
         this.debtRepository = debtRepository;
     }
 
-    public List<User> getBorrowers(String debtorId){
-        List<Debt> debts = debtRepository.getDebts(debtorId);
+    public List<User> getBorrowers(String userId){
+        List<Debt> debts = debtRepository.getDebts(userId);
 
         List<String> borrowerIds = new ArrayList<String>();
 
@@ -30,6 +30,17 @@ public class UserService {
         }
 
         return userRepository.get(borrowerIds);
+    }
+
+    public List<User> getDebtors(String userId) {
+        List<Debt> debts = debtRepository.getLoanedDebts(userId);
+
+        List<String> debtorIds = new ArrayList<String>();
+        for (Debt debt : debts) {
+            debtorIds.add(debt.getDebtorId());
+        }
+
+        return userRepository.get(debtorIds);
     }
 }
 

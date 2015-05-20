@@ -14,6 +14,8 @@ import java.util.List;
 @RequestMapping("/user/{debtorId}/debt")
 public class DebtController {
 
+    public static final String PARAM_BORROWER_ID = "borrowerId";
+
     @Autowired
     private DebtRepository repository;
 
@@ -34,5 +36,12 @@ public class DebtController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Debt> list(@PathVariable String debtorId){
         return repository.getDebts(debtorId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = PARAM_BORROWER_ID)
+    public List<Debt> listForBorrower(@PathVariable String debtorId,
+                                      @RequestParam(PARAM_BORROWER_ID) String borrowerId){
+
+        return repository.getDebts(debtorId, borrowerId);
     }
 }
