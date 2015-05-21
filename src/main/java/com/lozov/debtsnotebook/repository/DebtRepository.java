@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DebtRepository extends BasicDAO<Debt, String> {
     public static final String FIELD_DEBTOR_ID = "debtorId";
-    private static final String FIELD_BORROWER_ID = "borrowerId";
+    private static final String FIELD_LENDER_ID = "lenderId";
 
     public DebtRepository(Class<Debt> entityClass, Datastore ds) {
         super(entityClass, ds);
@@ -28,14 +28,14 @@ public class DebtRepository extends BasicDAO<Debt, String> {
                    .filter(FIELD_DEBTOR_ID, debtorId)).asList();
     }
 
-    public List<Debt> getLoanedDebts(String borrowerId) {
+    public List<Debt> getLoanedDebts(String lenderId) {
         return find(new QueryImpl<Debt>(Debt.class, getCollection(), getDatastore())
-                .filter(FIELD_BORROWER_ID, borrowerId)).asList();
+                .filter(FIELD_LENDER_ID, lenderId)).asList();
     }
 
-    public List<Debt> getDebts(String debtorId, String borrowerId) {
+    public List<Debt> getDebts(String debtorId, String lenderId) {
         return getDatastore().createQuery(Debt.class)
                 .field(FIELD_DEBTOR_ID).equal(debtorId)
-                .field(FIELD_BORROWER_ID).equal(borrowerId).asList();
+                .field(FIELD_LENDER_ID).equal(lenderId).asList();
     }
 }

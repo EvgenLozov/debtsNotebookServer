@@ -20,16 +20,16 @@ public class UserService {
         this.debtRepository = debtRepository;
     }
 
-    public List<User> getBorrowers(String userId){
+    public List<User> getLenders(String userId){
         List<Debt> debts = debtRepository.getDebts(userId);
 
-        List<String> borrowerIds = new ArrayList<String>();
+        List<String> lendersIds = new ArrayList<String>();
 
         for (Debt debt : debts) {
-            borrowerIds.add(debt.getBorrowerId());
+            lendersIds.add(debt.getLenderId());
         }
 
-        return userRepository.get(borrowerIds);
+        return userRepository.get(lendersIds);
     }
 
     public List<User> getDebtors(String userId) {

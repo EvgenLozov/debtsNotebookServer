@@ -15,7 +15,7 @@ public class Debt {
     @Id
     private String id;
     private String debtorId;
-    private String borrowerId;
+    private String lenderId;
     private Status status;
     private Integer amountOfMoney;
     private String desc;
@@ -40,12 +40,12 @@ public class Debt {
         this.debtorId = debtorId;
     }
 
-    public String getBorrowerId() {
-        return borrowerId;
+    public String getLenderId() {
+        return lenderId;
     }
 
-    public void setBorrowerId(String borrowerId) {
-        this.borrowerId = borrowerId;
+    public void setLenderId(String lenderId) {
+        this.lenderId = lenderId;
     }
 
     public Status getStatus() {

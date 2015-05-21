@@ -35,9 +35,9 @@ public class UserController {
         return repository.getById(id);
     }
 
-    @RequestMapping(value = "/{id}/borrowers", method = RequestMethod.GET)
-    public List<User> borrowers(@PathVariable String id){
-        return userService.getBorrowers(id);
+    @RequestMapping(value = "/{id}/lenders", method = RequestMethod.GET)
+    public List<User> lenders(@PathVariable String id){
+        return userService.getLenders(id);
     }
 
 
