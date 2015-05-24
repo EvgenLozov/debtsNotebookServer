@@ -40,7 +40,6 @@ public class UserController {
         return userService.getLenders(id);
     }
 
-
     @RequestMapping(value = "/{id}/debtors", method = RequestMethod.GET)
     public List<User> debtors(@PathVariable String id){
         return userService.getDebtors(id);

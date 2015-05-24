@@ -6,7 +6,9 @@ import com.lozov.debtsnotebook.repository.DebtRepository;
 import com.lozov.debtsnotebook.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lozov on 18.05.15.
@@ -23,7 +25,7 @@ public class UserService {
     public List<User> getLenders(String userId){
         List<Debt> debts = debtRepository.getDebts(userId);
 
-        List<String> lendersIds = new ArrayList<String>();
+        Set<String> lendersIds = new HashSet<>();
 
         for (Debt debt : debts) {
             lendersIds.add(debt.getLenderId());
@@ -35,7 +37,7 @@ public class UserService {
     public List<User> getDebtors(String userId) {
         List<Debt> debts = debtRepository.getLoanedDebts(userId);
 
-        List<String> debtorIds = new ArrayList<String>();
+        Set<String> debtorIds = new HashSet<>();
         for (Debt debt : debts) {
             debtorIds.add(debt.getDebtorId());
         }
