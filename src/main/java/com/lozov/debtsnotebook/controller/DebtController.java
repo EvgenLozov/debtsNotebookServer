@@ -2,6 +2,7 @@ package com.lozov.debtsnotebook.controller;
 
 import com.lozov.debtsnotebook.entity.Debt;
 import com.lozov.debtsnotebook.repository.DebtRepository;
+import com.lozov.debtsnotebook.repository.MongoDebtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +23,8 @@ public class DebtController {
     @RequestMapping(method = RequestMethod.POST)
     public Debt create(@PathVariable String debtorId, @RequestBody Debt debt){
         debt.setDebtorId(debtorId);
-        String id = (String) repository.save(debt).getId();
-        debt.setId(id);
 
-        return debt;
+        return repository.create(debt);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

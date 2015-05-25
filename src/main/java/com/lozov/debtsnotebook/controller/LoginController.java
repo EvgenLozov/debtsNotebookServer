@@ -1,6 +1,7 @@
 package com.lozov.debtsnotebook.controller;
 
 import com.lozov.debtsnotebook.entity.User;
+import com.lozov.debtsnotebook.repository.MongoUserRepository;
 import com.lozov.debtsnotebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

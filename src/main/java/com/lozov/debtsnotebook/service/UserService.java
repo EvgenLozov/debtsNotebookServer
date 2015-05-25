@@ -3,9 +3,10 @@ package com.lozov.debtsnotebook.service;
 import com.lozov.debtsnotebook.entity.Debt;
 import com.lozov.debtsnotebook.entity.User;
 import com.lozov.debtsnotebook.repository.DebtRepository;
+import com.lozov.debtsnotebook.repository.MongoDebtRepository;
+import com.lozov.debtsnotebook.repository.MongoUserRepository;
 import com.lozov.debtsnotebook.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
