@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by lozov on 12.05.15.
  */
-public class MongoDebtRepository implements DebtRepository<String> {
+public class MongoDebtRepository implements DebtRepository {
     public static final String FIELD_DEBTOR_ID = "debtorId";
     private static final String FIELD_LENDER_ID = "lenderId";
 

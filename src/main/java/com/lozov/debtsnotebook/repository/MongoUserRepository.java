@@ -14,7 +14,7 @@ import java.util.Set;
  * Created by lozov on 12.05.15.
  */
 
-public class MongoUserRepository implements UserRepository<String>{
+public class MongoUserRepository implements UserRepository{
     private static final String FIELD_USERNAME = "username";
     private static final String FIELD_PASSWORD = "password";
     private static final String FIELD_ID = "_id";

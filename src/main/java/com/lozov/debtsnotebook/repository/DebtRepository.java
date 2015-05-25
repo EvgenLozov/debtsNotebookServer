@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * Created by Yevhen on 2015-05-24.
  */
-public interface DebtRepository<T> {
+public interface DebtRepository {
     Debt create(Debt debt);
-    Debt getById(T id);
-    List<Debt> getDebts(T debtorId);
-    List<Debt> getLoanedDebts(T lenderId);
-    List<Debt> getDebts(T debtorId, T lenderId);
+    Debt getById(String id);
+    List<Debt> getDebts(String debtorId);
+    List<Debt> getLoanedDebts(String lenderId);
+    List<Debt> getDebts(String debtorId, String lenderId);
 }

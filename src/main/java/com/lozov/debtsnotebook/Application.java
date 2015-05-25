@@ -7,8 +7,10 @@ import com.lozov.debtsnotebook.repository.DebtRepository;
 import com.lozov.debtsnotebook.repository.MongoDebtRepository;
 import com.lozov.debtsnotebook.repository.MongoUserRepository;
 import com.lozov.debtsnotebook.repository.UserRepository;
+import com.lozov.debtsnotebook.service.MongoUserService;
 import com.lozov.debtsnotebook.service.UserService;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
@@ -31,7 +33,7 @@ public class Application {
 
     @Bean
     public UserService userService() throws UnknownHostException {
-        return new UserService(userRepository(), debtRepository());
+        return new MongoUserService(userRepository(), debtRepository());
     }
 
     @Bean
@@ -57,21 +59,21 @@ public class Application {
     public Datastore datastore() throws UnknownHostException {
         MongoClient mongoClient;
         Datastore datastore;
-        /*try {
+        try {
             String url = System.getenv("MONGOLAB_URI");
 
             if (url != null){
                 mongoClient = new MongoClient(new MongoClientURI(url));
                 datastore = morphia().createDatastore(mongoClient, MONGODB_NAME);
             }
-            else {*/
+            else {
                 mongoClient = new MongoClient();
                 datastore = morphia().createDatastore(mongoClient, LOCAL_MONGODB_NAME);
-           /* }
+            }
 
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
         return datastore;
     }

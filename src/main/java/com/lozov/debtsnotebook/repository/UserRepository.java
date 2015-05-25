@@ -8,10 +8,10 @@ import java.util.Set;
 /**
  * Created by Yevhen on 2015-05-24.
  */
-public interface UserRepository<T> {
-    User getById(T id);
+public interface UserRepository {
+    User getById(String id);
     User get(String username, String password);
-    List<User> get(Set<T> userIds);
+    List<User> get(Set<String> userIds);
     User create(User user);
     List<User> list();
 }
