@@ -1,12 +1,10 @@
 package com.lozov.debtsnotebook;
 
 import com.lozov.debtsnotebook.db.HikariDataSourceProvider;
+import com.lozov.debtsnotebook.db.JdbcService;
 import com.lozov.debtsnotebook.entity.Debt;
 import com.lozov.debtsnotebook.entity.User;
-import com.lozov.debtsnotebook.repository.DebtRepository;
-import com.lozov.debtsnotebook.repository.MongoDebtRepository;
-import com.lozov.debtsnotebook.repository.MongoUserRepository;
-import com.lozov.debtsnotebook.repository.UserRepository;
+import com.lozov.debtsnotebook.repository.*;
 import com.lozov.debtsnotebook.service.MongoUserService;
 import com.lozov.debtsnotebook.service.UserService;
 import com.mongodb.MongoClient;
@@ -33,13 +31,17 @@ public class Application {
 
     @Bean
     public UserService userService() throws UnknownHostException {
-        return new MongoUserService(userRepository(), debtRepository());
+        return mySqlUserRepository() ;
+    }
+
+    @Bean(name = "userRepository")
+    public UserRepository userRepository() throws UnknownHostException {
+        return mySqlUserRepository();
     }
 
     @Bean
-    public UserRepository userRepository() throws UnknownHostException {
-        BasicDAO<User, String> basicDAO = new BasicDAO<>(User.class, datastore());
-        return new MongoUserRepository(basicDAO);
+    public MySqlUserRepository mySqlUserRepository(){
+        return new MySqlUserRepository(jdbcService());
     }
 
     @Bean
@@ -57,25 +59,36 @@ public class Application {
 
     @Bean
     public Datastore datastore() throws UnknownHostException {
-        MongoClient mongoClient;
-        Datastore datastore;
+        return morphia().createDatastore(localMongoClient(), MONGODB_NAME);
+    }
+
+    @Bean
+    public JdbcService jdbcService(){
+        return new JdbcService(dataSource());
+    }
+
+    @Bean
+    public MongoClient prodMongoClient(){
         try {
             String url = System.getenv("MONGOLAB_URI");
 
             if (url != null){
-                mongoClient = new MongoClient(new MongoClientURI(url));
-                datastore = morphia().createDatastore(mongoClient, MONGODB_NAME);
+                return new MongoClient(new MongoClientURI(url));
             }
-            else {
-                mongoClient = new MongoClient();
-                datastore = morphia().createDatastore(mongoClient, LOCAL_MONGODB_NAME);
-            }
-
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
+        return null;
+    }
 
-        return datastore;
+    @Bean
+    public MongoClient localMongoClient(){
+        try {
+            return new MongoClient();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Bean

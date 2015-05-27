@@ -4,8 +4,10 @@ import com.lozov.debtsnotebook.entity.User;
 import com.lozov.debtsnotebook.repository.UserRepository;
 import com.lozov.debtsnotebook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class UserController {
 
-    @Autowired
+    @Resource(name = "userRepository")
     private UserRepository repository;
 
     @Autowired
