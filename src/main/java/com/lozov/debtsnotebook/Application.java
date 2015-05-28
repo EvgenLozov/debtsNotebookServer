@@ -46,8 +46,7 @@ public class Application {
 
     @Bean
     public DebtRepository debtRepository() throws UnknownHostException {
-        BasicDAO<Debt, String> basicDAO = new BasicDAO<>(Debt.class, datastore());
-        return new MongoDebtRepository(basicDAO);
+        return new MySqlDebtRepository(jdbcService());
     }
 
     @Bean
