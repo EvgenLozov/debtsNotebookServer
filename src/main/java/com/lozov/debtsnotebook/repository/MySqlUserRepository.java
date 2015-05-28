@@ -5,6 +5,7 @@ import com.lozov.debtsnotebook.db.resultsetextractor.UserResultSetExtractor;
 import com.lozov.debtsnotebook.db.resultsetextractor.UsersResultSetExtractor;
 import com.lozov.debtsnotebook.db.sqloperation.*;
 import com.lozov.debtsnotebook.entity.User;
+import com.lozov.debtsnotebook.service.UserService;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -12,7 +13,7 @@ import java.util.*;
 /**
  * Created by Yevhen on 2015-05-25.
  */
-public class MySqlUserRepository implements UserRepository {
+public class MySqlUserRepository implements UserRepository, UserService {
 
     private JdbcService jdbcService;
 
@@ -54,18 +55,43 @@ public class MySqlUserRepository implements UserRepository {
     @Override
     public User create(User user) {
         user.setId(UUID.randomUUID().toString());
+        int successFlag = 0;
         try {
-            jdbcService.executeUpdate(new CreateUserSqlOperation(user));
+            successFlag = jdbcService.executeUpdate(new CreateUserSqlOperation(user));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+
+        if (successFlag > 0)
+            return user;
+
+        return null;
     }
 
     @Override
     public List<User> list() {
         try {
             return jdbcService.executeQuery(new GetUsersSqlOperation(), new UsersResultSetExtractor());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<User> getLenders(String debtorId) {
+        try {
+            return jdbcService.executeQuery(new GetLendersSqlOperation(debtorId), new UsersResultSetExtractor());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<User> getDebtors(String lenderId) {
+        try {
+            return jdbcService.executeQuery(new GetDebtorsSqlOperation(lenderId), new UsersResultSetExtractor());
         } catch (SQLException e) {
             e.printStackTrace();
         }

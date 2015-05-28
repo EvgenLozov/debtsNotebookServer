@@ -12,12 +12,14 @@ import java.sql.SQLException;
 public class UserResultSetExtractor implements ResultSetExtractor<User> {
     @Override
     public User read(ResultSet resultSet) throws SQLException {
-        User user = new User();
-
-        user.setId(resultSet.getString(1));
-        user.setUsername(resultSet.getString(2));
-        user.setPassword(resultSet.getNString(3));
-        user.setEmail(resultSet.getString(4));
+        User user = null;
+        if (resultSet.next()){
+            user = new User();
+            user.setId(resultSet.getString(1));
+            user.setUsername(resultSet.getString(2));
+            user.setPassword(resultSet.getNString(3));
+            user.setEmail(resultSet.getString(4));
+        }
 
         return user;
     }

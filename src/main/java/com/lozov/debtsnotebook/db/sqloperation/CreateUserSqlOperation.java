@@ -19,7 +19,7 @@ public class CreateUserSqlOperation implements SqlOperation {
 
     @Override
     public String getRawSql() {
-        return "INSERT INTO `user` ('id', `username`, `password`, `email`) VALUES (?, ?, ?, ?)";
+        return "INSERT INTO user (`id`, `username`, `password`, `email`) VALUES (?, ?, ?, ?)";
     }
 
     @Override

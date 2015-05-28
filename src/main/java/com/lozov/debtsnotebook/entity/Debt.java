@@ -3,7 +3,7 @@ package com.lozov.debtsnotebook.entity;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by lozov on 12.05.15.
