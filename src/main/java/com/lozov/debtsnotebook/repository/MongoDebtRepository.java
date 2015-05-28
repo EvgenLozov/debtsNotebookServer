@@ -4,7 +4,10 @@ import com.lozov.debtsnotebook.entity.Debt;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
+import org.mongodb.morphia.mapping.Mapper;
+import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.QueryImpl;
+import org.mongodb.morphia.query.UpdateOpsImpl;
 
 import java.util.List;
 
@@ -31,6 +34,19 @@ public class MongoDebtRepository implements DebtRepository {
 
     public Debt getById(String id){
         return basicDAO.findOne("_id", new ObjectId(id));
+    }
+
+    @Override
+    public Debt update(Debt debt) {
+        Query<Debt> updateQuery = new QueryImpl<>(Debt.class, basicDAO.getCollection(), basicDAO.getDatastore())
+                .filter("_id", new ObjectId(debt.getId()));
+        UpdateOpsImpl<Debt> updateOps = (UpdateOpsImpl<Debt>) basicDAO.createUpdateOperations()
+                .set("desc", debt.getDesc())
+                .set("amountOfMoney", debt.getAmountOfMoney())
+                .set("status", debt.getStatus());
+        basicDAO.update(updateQuery, updateOps);
+
+        return debt;
     }
 
     public List<Debt> getDebts(String debtorId) {

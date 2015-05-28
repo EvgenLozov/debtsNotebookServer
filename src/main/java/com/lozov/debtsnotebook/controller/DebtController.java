@@ -32,6 +32,11 @@ public class DebtController {
         return repository.getById(id);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Debt update(@PathVariable String id, @RequestBody Debt debt){
+        return repository.update(debt);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Debt> list(@PathVariable String debtorId){
         return repository.getDebts(debtorId);

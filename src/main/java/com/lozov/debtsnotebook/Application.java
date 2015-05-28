@@ -78,9 +78,9 @@ public class Application {
         return datastore;
     }
 
-    @Bean
-    public DataSource dataSource(){
-        HikariDataSourceProvider dataSourceProvider = new HikariDataSourceProvider(MYSQL_DATABASE_URL, 10);
-        return dataSourceProvider.get();
-    }
+//    @Bean
+//    public DataSource dataSource(){
+//        HikariDataSourceProvider dataSourceProvider = new HikariDataSourceProvider(MYSQL_DATABASE_URL, 10);
+//        return dataSourceProvider.get();
+//    }
 }
