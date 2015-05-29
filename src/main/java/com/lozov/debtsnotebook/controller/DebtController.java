@@ -6,6 +6,7 @@ import com.lozov.debtsnotebook.repository.MongoDebtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
 public class DebtController {
 
     public static final String PARAM_LENDER_ID = "lenderId";
+    private static final String PARAM_STATUS = "status";
 
     @Autowired
     private DebtRepository repository;
@@ -44,8 +46,15 @@ public class DebtController {
 
     @RequestMapping(method = RequestMethod.GET, params = PARAM_LENDER_ID)
     public List<Debt> debtsToLender(@PathVariable String debtorId,
-                                    @RequestParam(PARAM_LENDER_ID) String lenderId){
-
-        return repository.getDebts(debtorId, lenderId);
+                                    @RequestParam(PARAM_LENDER_ID) String lenderId,
+                                    @RequestParam(PARAM_STATUS) String status){
+        List<Debt> debts = repository.getDebts(debtorId, lenderId);
+        Debt.Status debtStatus = Debt.Status.valueOf(status);
+        Iterator<Debt> iterator = debts.iterator();
+        while (iterator.hasNext()){
+            if(!iterator.next().getStatus().equals(debtStatus))
+                iterator.remove();
+        }
+        return debts;
     }
 }

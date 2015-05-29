@@ -51,6 +51,11 @@ public class MySqlDebtRepository implements DebtRepository {
     }
 
     @Override
+    public Debt update(Debt debt) {
+        return null;
+    }
+
+    @Override
     public List<Debt> getDebts(String debtorId) {
         try {
             return jdbcService.executeQuery(new GetDebtsByDebtorIdSqlOperation(debtorId),
