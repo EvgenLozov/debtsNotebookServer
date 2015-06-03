@@ -60,17 +60,17 @@ public class ConfigWithMySql {
         return new HikariDataSourceProvider(MYSQL_HEROKU_DATABASE_URL, 3);
     }
 
-    public ApacheDataSourceProvider herokuWithapache(){
-        String url = System.getenv(MYSQL_HEROKU_DATABASE_CONFIG_ARG);
+//    public ApacheDataSourceProvider herokuWithapache(){
+//        String url = System.getenv(MYSQL_HEROKU_DATABASE_CONFIG_ARG);
+//
+//        if (url != null)
+//            return new ApacheDataSourceProvider(url, 3);
+//
+//        return new ApacheDataSourceProvider(MYSQL_HEROKU_DATABASE_URL, 3);
+//    }
 
-        if (url != null)
-            return new ApacheDataSourceProvider(url, 3);
 
-        return new ApacheDataSourceProvider(MYSQL_HEROKU_DATABASE_URL, 3);
-    }
-
-
-    @Bean HikariDataSourceProvider local(){
-        return new HikariDataSourceProvider(MYSQL_LOCAL_DATABASE_URL, 10);
-    }
+//    @Bean HikariDataSourceProvider local(){
+//        return new HikariDataSourceProvider(MYSQL_LOCAL_DATABASE_URL, 10);
+//    }
 }
