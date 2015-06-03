@@ -6,6 +6,7 @@ import com.lozov.debtsnotebook.repository.MongoDebtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class DebtController {
     @RequestMapping(method = RequestMethod.POST)
     public Debt create(@PathVariable String debtorId, @RequestBody Debt debt){
         debt.setDebtorId(debtorId);
+        debt.setDate(new Date());
 
         return repository.create(debt);
     }

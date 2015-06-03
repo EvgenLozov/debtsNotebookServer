@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
 /**
  * Created by lozov on 29.05.15.
  */
-@SpringBootApplication
+//@SpringBootApplication
 public class ConfigWithMongo {
     private static final String MONGODB_NAME = "heroku_app36911993";
     private static final String LOCAL_MONGODB_NAME = "debts";

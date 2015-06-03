@@ -23,7 +23,7 @@ public class DebtsResultSetExtractor implements ResultSetExtractor<List<Debt>> {
             debt.setStatus(Debt.Status.valueOf(resultSet.getString(4)));
             debt.setAmountOfMoney(resultSet.getInt(5));
             debt.setDesc(resultSet.getString(6));
-            debt.setDate(resultSet.getDate(7));
+            debt.setDate(resultSet.getTimestamp(7));
             debts.add(debt);
         }
         return debts;

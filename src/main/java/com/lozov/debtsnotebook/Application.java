@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Import;
  * Created by lozov on 29.05.15.
  */
 @SpringBootApplication
-@Import(value = ConfigWithMongo.class)
+@Import(value = ConfigWithMySql.class)
 public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(ConfigWithMongo.class, args);
+        SpringApplication.run(ConfigWithMySql.class, args);
     }
 }

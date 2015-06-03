@@ -5,6 +5,7 @@ import com.lozov.debtsnotebook.entity.Debt;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * Created by Yevhen on 2015-05-27.
@@ -30,7 +31,7 @@ public class CreateDebtSqlOperation implements SqlOperation{
         statement.setString(3, debt.getLenderId());
         statement.setString(4, debt.getStatus().name());
         statement.setInt(5, debt.getAmountOfMoney());
-        statement.setString(5, debt.getDesc());
-        statement.setDate(7, debt.getDate());
+        statement.setString(6, debt.getDesc());
+        statement.setTimestamp(7, new Timestamp(debt.getDate().getTime()));
     }
 }

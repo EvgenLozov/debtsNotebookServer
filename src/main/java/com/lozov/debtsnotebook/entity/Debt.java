@@ -1,9 +1,14 @@
 package com.lozov.debtsnotebook.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.lozov.debtsnotebook.controller.DateDeserializer;
+import com.lozov.debtsnotebook.controller.DateSerializer;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * Created by lozov on 12.05.15.
@@ -19,6 +24,9 @@ public class Debt {
     private Status status;
     private Integer amountOfMoney;
     private String desc;
+
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
     private Date date;
 
     public Debt() {
