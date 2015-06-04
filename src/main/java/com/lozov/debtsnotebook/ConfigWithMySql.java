@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import javax.sql.DataSource;
 import java.net.UnknownHostException;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class ConfigWithMySql {
     private static final String MYSQL_HEROKU_DATABASE_CONFIG_ARG = "CLEARDB_DATABASE_URL";
     private static final String MYSQL_LOCAL_DATABASE_URL = "jdbc:mysql://localhost:3306/debts?user=root&password=neuser50";
