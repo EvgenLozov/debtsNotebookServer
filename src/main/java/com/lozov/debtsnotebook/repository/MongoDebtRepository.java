@@ -18,6 +18,7 @@ public class MongoDebtRepository implements DebtRepository {
     public static final String FIELD_DEBTOR_ID = "debtorId";
     private static final String FIELD_LENDER_ID = "lenderId";
     private static final String FIELD_DATE = "date";
+    private static final String FIELD_STATUS = "status";
 
     private BasicDAO<Debt, String> basicDAO;
 
@@ -51,19 +52,22 @@ public class MongoDebtRepository implements DebtRepository {
         return debt;
     }
 
-    public List<Debt> getDebts(String debtorId) {
-        return basicDAO.find(new QueryImpl<>(Debt.class, basicDAO.getCollection(), basicDAO.getDatastore())
-                .filter(FIELD_DEBTOR_ID, debtorId)).asList();
+    public List<Debt> getDebtsByDebtor(String debtorId) {
+        return basicDAO.getDatastore().createQuery(Debt.class)
+                .filter(FIELD_DEBTOR_ID, debtorId)
+                .filter(FIELD_STATUS, Debt.Status.OPEN).asList();
     }
 
-    public List<Debt> getLoanedDebts(String lenderId) {
-        return basicDAO.find(new QueryImpl<>(Debt.class, basicDAO.getCollection(), basicDAO.getDatastore())
-                .filter(FIELD_LENDER_ID, lenderId).filter(FIELD_DATE, Debt.Status.OPEN)).asList();
+    public List<Debt> getDebtsByLender(String lenderId) {
+        return basicDAO.getDatastore().createQuery(Debt.class)
+                .filter(FIELD_LENDER_ID, lenderId)
+                .filter(FIELD_STATUS, Debt.Status.OPEN).asList();
     }
 
     public List<Debt> getDebts(String debtorId, String lenderId) {
         return basicDAO.getDatastore().createQuery(Debt.class)
                 .field(FIELD_DEBTOR_ID).equal(debtorId)
-                .field(FIELD_LENDER_ID).equal(lenderId).asList();
+                .field(FIELD_LENDER_ID).equal(lenderId)
+                .filter(FIELD_STATUS, Debt.Status.OPEN).asList();
     }
 }
