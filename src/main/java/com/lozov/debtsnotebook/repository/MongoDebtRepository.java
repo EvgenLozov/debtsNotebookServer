@@ -2,9 +2,7 @@ package com.lozov.debtsnotebook.repository;
 
 import com.lozov.debtsnotebook.entity.Debt;
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
-import org.mongodb.morphia.mapping.Mapper;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.QueryImpl;
 import org.mongodb.morphia.query.UpdateOpsImpl;
@@ -46,7 +44,7 @@ public class MongoDebtRepository implements DebtRepository {
                 .set("desc", debt.getDesc())
                 .set("amountOfMoney", debt.getAmountOfMoney())
                 .set("status", debt.getStatus())
-                .set("date", debt.getDate());
+                .set("lastModified", debt.getLastModified());
         basicDAO.update(updateQuery, updateOps);
 
         return debt;

@@ -27,8 +27,8 @@ public class MySqlDebtRepository implements DebtRepository {
     public Debt create(Debt debt) {
         String id = UUID.randomUUID().toString();
         debt.setId(id);
-        if (debt.getDate() == null)
-            debt.setDate(new Timestamp(System.currentTimeMillis()));
+        if (debt.getCreatedAt() == null)
+            debt.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
         int successFlag = 0;
         try {

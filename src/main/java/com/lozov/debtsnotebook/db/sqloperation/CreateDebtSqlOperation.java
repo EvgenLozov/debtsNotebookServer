@@ -20,8 +20,8 @@ public class CreateDebtSqlOperation implements SqlOperation{
 
     @Override
     public String getRawSql() {
-        return "INSERT INTO `debts`.`debt` (`id`, `debtorId`, `lenderId`, `status`, `amountOfMoney`, `desc`, `date`) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO `debts`.`debt` (`id`, `debtorId`, `lenderId`, `status`, `amountOfMoney`, `desc`, `createdAt`, `lastModified`) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
@@ -32,6 +32,7 @@ public class CreateDebtSqlOperation implements SqlOperation{
         statement.setString(4, debt.getStatus().name());
         statement.setInt(5, debt.getAmountOfMoney());
         statement.setString(6, debt.getDesc());
-        statement.setTimestamp(7, new Timestamp(debt.getDate().getTime()));
+        statement.setTimestamp(7, new Timestamp(debt.getCreatedAt().getTime()));
+        statement.setTimestamp(7, new Timestamp(debt.getLastModified().getTime()));
     }
 }

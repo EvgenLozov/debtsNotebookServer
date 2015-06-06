@@ -5,6 +5,7 @@ import com.lozov.debtsnotebook.entity.Debt;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * Created by Yevhen on 2015-05-29.
@@ -19,7 +20,7 @@ public class UpdateDebtSqlOperation implements SqlOperation {
 
     @Override
     public String getRawSql() {
-        return "UPDATE debt SET `status`= ?, `amountOfMoney`= ?, `desc`= ? WHERE `id`= ?";
+        return "UPDATE debt SET `status`= ?, `amountOfMoney`= ?, `desc`= ? , `lastModified` = ? WHERE `id`= ?";
     }
 
     @Override
@@ -27,6 +28,7 @@ public class UpdateDebtSqlOperation implements SqlOperation {
         statement.setString(1, debt.getStatus().name());
         statement.setInt(2, debt.getAmountOfMoney());
         statement.setString(3, debt.getDesc());
-        statement.setString(4, debt.getId());
+        statement.setTimestamp(4, new Timestamp(debt.getLastModified().getTime()));
+        statement.setString(5, debt.getId());
     }
 }

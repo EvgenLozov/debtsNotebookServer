@@ -25,7 +25,7 @@ public class DebtController {
     @RequestMapping(method = RequestMethod.POST)
     public Debt create(@PathVariable String debtorId, @RequestBody Debt debt){
         debt.setDebtorId(debtorId);
-        debt.setDate(new Date());
+        debt.setCreatedAt(new Date());
 
         return repository.create(debt);
     }
