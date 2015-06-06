@@ -3,8 +3,6 @@ package com.lozov.debtsnotebook.service;
 import com.lozov.debtsnotebook.entity.Debt;
 import com.lozov.debtsnotebook.entity.User;
 import com.lozov.debtsnotebook.repository.DebtRepository;
-import com.lozov.debtsnotebook.repository.MongoDebtRepository;
-import com.lozov.debtsnotebook.repository.MongoUserRepository;
 import com.lozov.debtsnotebook.repository.UserRepository;
 
 import java.util.HashSet;
@@ -24,7 +22,7 @@ public class MongoUserService implements UserService{
     }
 
     public List<User> getLenders(String userId){
-        List<Debt> debts = debtRepository.getDebts(userId);
+        List<Debt> debts = debtRepository.getDebtsByDebtor(userId);
 
         Set<String> lendersIds = new HashSet<>();
 
@@ -36,7 +34,7 @@ public class MongoUserService implements UserService{
     }
 
     public List<User> getDebtors(String userId) {
-        List<Debt> debts = debtRepository.getLoanedDebts(userId);
+        List<Debt> debts = debtRepository.getDebtsByLender(userId);
 
         Set<String> debtorIds = new HashSet<>();
         for (Debt debt : debts) {

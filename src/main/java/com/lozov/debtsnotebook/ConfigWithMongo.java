@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
 /**
  * Created by lozov on 29.05.15.
  */
-//@SpringBootApplication
+@SpringBootApplication
 public class ConfigWithMongo {
     private static final String MONGODB_NAME = "heroku_app36911993";
     private static final String LOCAL_MONGODB_NAME = "debts";
@@ -52,7 +52,7 @@ public class ConfigWithMongo {
         return morphia().createDatastore(localMongoClient(), LOCAL_MONGODB_NAME);
     }
 
-    @Bean
+//    @Bean
     public MongoClient prodMongoClient(){
         try {
             String url = System.getenv("MONGOLAB_URI");
@@ -66,7 +66,7 @@ public class ConfigWithMongo {
         return null;
     }
 
-    @Bean
+//    @Bean
     public MongoClient localMongoClient(){
         try {
             return new MongoClient();

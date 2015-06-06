@@ -68,7 +68,7 @@ public class MySqlDebtRepository implements DebtRepository {
     }
 
     @Override
-    public List<Debt> getDebts(String debtorId) {
+    public List<Debt> getDebtsByDebtor(String debtorId) {
         try {
             return jdbcService.executeQuery(new GetDebtsByDebtorIdSqlOperation(debtorId),
                                             new DebtsResultSetExtractor());
@@ -79,7 +79,7 @@ public class MySqlDebtRepository implements DebtRepository {
     }
 
     @Override
-    public List<Debt> getLoanedDebts(String lenderId) {
+    public List<Debt> getDebtsByLender(String lenderId) {
         try {
             return jdbcService.executeQuery(new GetDebtsByLenderIdSqlOperation(lenderId),
                                             new DebtsResultSetExtractor());

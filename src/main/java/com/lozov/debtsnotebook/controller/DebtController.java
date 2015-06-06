@@ -2,7 +2,6 @@ package com.lozov.debtsnotebook.controller;
 
 import com.lozov.debtsnotebook.entity.Debt;
 import com.lozov.debtsnotebook.repository.DebtRepository;
-import com.lozov.debtsnotebook.repository.MongoDebtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +42,7 @@ public class DebtController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Debt> list(@PathVariable String debtorId){
-        return repository.getDebts(debtorId);
+        return repository.getDebtsByDebtor(debtorId);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = PARAM_LENDER_ID)

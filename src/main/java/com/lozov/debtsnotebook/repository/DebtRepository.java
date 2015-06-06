@@ -11,7 +11,7 @@ public interface DebtRepository {
     Debt create(Debt debt);
     Debt getById(String id);
     Debt update(Debt debt);
-    List<Debt> getDebts(String debtorId);
-    List<Debt> getLoanedDebts(String lenderId);
+    List<Debt> getDebtsByDebtor(String debtorId);
+    List<Debt> getDebtsByLender(String lenderId);
     List<Debt> getDebts(String debtorId, String lenderId);
 }
